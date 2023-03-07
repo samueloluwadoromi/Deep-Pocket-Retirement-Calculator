@@ -1,0 +1,277 @@
+*{
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    background-color: #f1f1f1;
+}
+
+.logo{
+    width: 488px;
+    border: 0; 
+    max-width: 50%; 
+}
+
+#myForm{
+    background-color: #fff;
+    margin: 20px auto;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 40px;
+    width: 70%;
+    min-width: 300px;
+}
+
+input{
+    padding: 10px;
+    width: 100%;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    border: 1px solid #aaaaaa;
+}
+
+h1{
+    color: #2E8B57;
+    font-size: 35px;
+}
+
+label{
+    color: #000;
+    font-weight: 500;
+    font-size: 25px;
+}
+
+/* Mark invalid input that gets an error */
+input:invalid{
+    background-color: #ffdddd;
+    border: 2px solid #D2042D;
+}
+
+input:valid{
+    background-color: #fff;
+    border: 2px solid green;
+}
+
+#advOpt{
+    background-color: #cb8e00;
+    padding: 15px 20px;
+    font-size: 15px;
+    margin-bottom: 20px;
+}
+
+#advanceOption{
+    display: none;
+}
+
+/*Hide all steps by default */
+.tab{
+    display: none;
+}
+
+
+button{
+    background-color: #2E8B57;
+    color: #fff;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
+}
+
+button:hover{
+    opacity: 0.6;
+}
+
+#prevBtn{
+    background-color: #bbbbbb;
+}
+
+.step{
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #722F37;
+    border: none;
+    border-radius: 50%;
+    display: inline-block;
+    opacity: 0.5;
+}
+
+.step.active{
+    opacity: 1;
+}
+
+.input-details{
+    font-size: 12px;
+    color: #D2042D;
+    font-weight: 600;
+}
+
+.stp{
+    text-align: center;
+    margin-top: 40px;
+}
+
+/* Mark steps that are complete and valid */
+.step.finish{
+    background-color: #2E8B57;
+}
+
+
+.result p, .investment p{
+    font-size: 22px;
+}
+
+.brk{
+    display: flex;
+    width: 60%;
+    margin: auto;
+    
+}
+
+.chart, .investment, .barChart{
+    margin: auto;
+}
+
+.chart, .barChart{
+    width: 100%; 
+    max-width: 800px;
+}
+
+.btn-container{
+    overflow: auto;
+}
+.btn{
+    float: right;
+}
+
+.investment{
+    width: 20%;
+}
+#investmentResult{
+    margin: auto;
+    text-align: center;
+    background-color: #cb8e00;
+    width: 50%;
+    padding: 20px;
+    color: #fff;
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+.brk .iconText{
+    font-size: 15px;
+    color: #fff;
+    margin: auto;
+    text-align: center;
+}
+
+.brk #startAmt, .brk #tCont, .brk #tGrowth, .brk #iYears{
+    font-size: 25px;
+    margin: auto;
+    color: #fff;
+    text-align: center;
+    font-weight: 550;
+}
+
+.brk > div {
+    margin: auto;
+}
+
+.brk .brk1{
+    background-color: #cb8e00;
+    flex: 25%;
+    padding: 10px;
+}
+.brk .brk2{
+    background-color: #722F37;
+    flex: 25%;
+    padding: 10px;
+}
+.brk .brk3{
+    background-color: #2E8B57;
+    flex: 25%;
+    padding: 10px;
+}
+.brk .brk4{
+    background-color: #D2042D;
+    flex: 25%;
+    padding: 10px;
+}
+
+/* Responsive layout - makes a one column-layout instead of a two-column layout */
+@media (max-width: 900px) {
+    .brk {
+        width: 100%;
+    }
+
+    .brk > .brk1, .brk2, .brk3, .brk4{
+        flex: 1 1 0;
+    }
+
+    h1{
+        font-size: 25px;
+    }
+
+    .result p, .investment p{
+        font-size: 12px;
+    }
+
+    .brk #startAmt, .brk #tCont, .brk #tGrowth, .brk #iYears{
+        font-size: 10px;
+    }
+
+    .brk .iconText{
+        font-size: 8px;
+    }
+
+    #investmentResult{
+        width: 100%;
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    .step{
+        height: 5px;
+        width: 5px;
+    }
+
+    button{
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 12px;
+    }
+
+    #advOpt{
+        padding: 5px 10px;
+        font-size: 10px;
+    }
+
+    input{
+        padding: 5px;
+        font-size: 8px;
+    }
+
+    label{
+        font-size: 12px;
+    }
+
+    .input-details{
+        font-size: 7px;
+    }
+    
+}
+
+@media (max-width: 500px) {
+    h1{
+        font-size: 20px;
+    }
+}
+/* Used colors
+yellow - #cb8e00
+red - #D2042D
+wine - #722F37
+green - #2E8B57
+*/

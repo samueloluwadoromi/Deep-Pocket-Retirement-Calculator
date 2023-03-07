@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--Metadata-->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!--Title and Icon-->
+    <title>Deep Pockets</title>
+    <link rel="icon" type="image/x-icon" href="/image/favicon.png">
+    
+    <!--CSS Links-->
+    <link rel="stylesheet" href="/style.css">
+    
+    <!--JavaScript for Retirement Calculator-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <!--<script src="/retirementCalculator.js"></script>-->
+</head>
+<body>
+    <div class="logo-container">
+        <p align="center">
+            <a href="#">
+                <img class="logo" src="/image/deep pockets.png" alt="Retirement Calculator" target="_blank">
+            </a>
+        </p>
+    </div>
+
+    <div class="form">
+        <!--Read user input-->
+        <form action="" id="myForm">
+            
+            <!--Personal Information Input-->
+            <div class="tab"> 
+                <h1> Client's Personal Information: </h1>
+                <p>
+                    <label for="clientName" class="label">Full Name: </label>
+                    <input type="text" id="clientName" name="clientName" autocomplete="off" placeholder="Enter your name..." required>
+                </p>
+                <p>
+                    <label for="currentAge" class="label">Current Age: </label>
+                    <input type="number" id="currentAge" min="18" max="85" name="currentAge" autocomplete="off" placeholder="Enter your current age... min: 18 and max: 85" required>
+                </p>
+                <p>
+                    <label for="retirementAg" class="label">Planned Retirement Age: </label>
+                    <input type="number" id="retirementAge" min="18" max="85" name="retirementAge" autocomplete="off" placeholder="Enter your current age... min: 18 and max: 85" required>
+                </p>
+            </div>
+
+            <!--Income, Retirement and Investment Input-->
+            <div class="tab"> 
+                <h1> Saving and Spending Estimates: </h1>
+                <p>
+                    <label for="annualIncome" class="label">Current Annual Income: </label>
+                    <input type="text" id="annualIncome" name="annualIncome" autocomplete="off" placeholder="Enter your current annual income..." required>
+                </p>
+                <p>
+                    <label for="currentRetirementSavings" class="label">Current Retirement Saving: </label>
+                    <input type="number" id="currentRetirementSavings" name="currentRetirementSavings" autocomplete="off" placeholder="Enter your current retirement saving..." required>
+                </p>
+                <p>
+                    <label for="annualRetirementContribution" class="label">Annual Retirement Contribution: </label>
+                    <input type="number" id="annualRetirementContribution" name="annualRetirementContribution" autocomplete="off" placeholder="Enter your annual retirement contributions..." required>
+                </p>
+                <p>
+                    <label for="incomeIncrease" class="label">Expected Income Increase (%): </label>
+                    <input type="number" id="incomeIncrease" name="incomeIncrease" autocomplete="off" placeholder="Enter your current annual income increase..." required>
+                </p>
+                <p>
+                    <label for="annualRetirementSpending" class="label">Annual Spending in Retirement: </label>
+                    <input type="number" id="annualRetirementSpending" name="annualRetirementSpending" autocomplete="off" placeholder="Enter your annual retirement spending.." required>
+                </p>
+                <p>
+                    <label for="taxRate" class="label">Overall Effective Tax Rate (%): </label>
+                    <input type="number" id="taxRate" name="taxRate" autocomplete="off" placeholder="Enter your overall effective tax rate...">
+                </p>
+                <p>
+                    <label for="returnRate" class="label">Expected Rate of Return (%): </label>
+                    <input type="number" id="returnRate" name="returnRate" autocomplete="off" placeholder="Enter your annual return rate...">
+                </p>
+
+                <button type="button" id="advOpt" onclick="showAdvOpt()">Advance Option</button>
+
+                <div id="advanceOption">
+                    <h1> Investment Option: </h1>
+                    <p>
+                        <label for="startingAmount" class="label">Current Investment Amount: </label>
+                        <input type="number" id="startingAmount" name="incomeIncrease" autocomplete="off" placeholder="Enter your investment starting amount...">
+                    </p>
+                    <p>
+                        <label for="holdTime" class="label">Years to Accumulate: </label>
+                        <input type="number" id="holdTime" name="holdTime" autocomplete="off" placeholder="Enter your investment holding time...">
+                    </p>
+                    <p>
+                        <label for="yearlyInvestment" class="label">Additional Yearly Investment: </label>
+                        <input type="number" id="yearlyInvestment" name="yearlyInvestment" autocomplete="off" placeholder="Enter your annual investment contribution...">
+                    </p>
+                </div>
+            </div>
+
+            <!--Output Results and Graphs-->
+            <div class="tab">
+                <div>
+                    <h1>Retirement Summary</h1>
+                    <div class="result">
+                        <p><span id="greeting"></span></p>
+                        <p><span id="result"></span></p>
+                        <p><span id="result1"></span></p>
+                    </div>
+
+                    <br><br>
+
+                    <div class="chart">
+                        <canvas id="myChart"></canvas>
+                    </div>
+
+                </div>
+                <br><br>
+                <div>
+                    <h1>Investment Summary</h1>
+                    <p id="investmentResult"></p>
+                    <br><br>    
+                    <div class="brk">
+                        <div class="brk1">
+                            <p id="startAmt"></p>
+                            <p class="iconText">Starting Amount</p>
+                        </div>
+                        <div class="brk2">
+                            <p id="tCont"></p>
+                            <p class="iconText">Total Contribution</p>
+                        </div>
+                        <div class="brk3">
+                            <p id="tGrowth"></p>
+                            <p class="iconText">Investment Growth</p>
+                        </div>
+                        <div class="brk4">
+                            <p id="iYears"></p>
+                            <p class="iconText">Investment Years</p>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="investment">
+                        <canvas id="investChart"></canvas>
+                    </div>
+                    <div class="barChart">
+                        <canvas id="myBarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="btns-container">
+                <div class="btn">
+                  <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                  <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+                </div>
+              </div>
+            
+            <div class="stp">
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+            </div>
+
+        </form>   
+
+    </div>
+
+    <script>
+        var currentTab = 0;
+        showTab(currentTab);
+
+        // display the tab
+        function showTab(n){
+            // This function will display the specified tab of the form...
+            var x = document.getElementsByClassName("tab");
+            x[n].style.display = "block";
+            //... and fix the Previous/Next buttons:
+            if (n == 0) {
+                document.getElementById("prevBtn").style.display = "none";
+            } else {
+                document.getElementById("prevBtn").style.display = "inline";
+            }
+            if (n == (x.length - 1)) {
+                document.getElementById("nextBtn").innerHTML = "Start Over";
+            } else {
+                document.getElementById("nextBtn").innerHTML = "Next";
+            }
+            //... and run a function that will display the correct step indicator:
+            fixStepIndicator(n);
+
+            // run investment calculator
+            investmentCalculator();
+
+            
+            // run retirement calculator
+            retirementCalculator();
+        }
+
+        // go to next and previous tab
+        function nextPrev(n) {
+            // This function will figure out which tab to display
+            var x = document.getElementsByClassName("tab");
+            // Exit the function if any field in the current tab is invalid:
+            
+            if (n == 1 && !validateForm()) return false;
+
+            // Hide the current tab:
+            x[currentTab].style.display = "none";
+            // Increase or decrease the current tab by 1:
+            currentTab = currentTab + n;
+            // if you have reached the end of the form...
+            if (currentTab >= x.length) {
+                // ... the form gets submitted:
+                document.getElementById("myForm").submit();
+                return false;
+            }
+            // Otherwise, display the correct tab:
+            showTab(currentTab);
+        }
+
+        // Validate the input with required attribute
+        function validateForm(){
+            var x, y, i, valid = true;
+            tabs = document.getElementsByClassName("tab");
+            inputs = tabs[currentTab].getElementsByTagName("input");
+
+            //var inputs = tabs[currentTab].querySelectorAll("[required]");
+            
+            for (var i = 0; i < inputs.length; i++){
+                if (inputs[i].hasAttribute("required") && inputs[i].value == ""){
+                    inputs[i].className += "invalid";
+                    //inputs[i].alert("Please fill out all required fields.");
+                    valid = false;
+                }
+            }
+            return valid;
+        }
+
+        // Display addition option for investment
+        function showAdvOpt(){
+            var showOpt = document.getElementById("advanceOption");
+
+            if (showOpt.style.display == "none"){
+                showOpt.style.display = "block";
+            } else {
+                showOpt.style.display = "none";
+            }
+        }
+
+        //  Step Indicator Function
+        function fixStepIndicator(n) {
+            // This function removes the "active" class of all steps...
+            var i, x = document.getElementsByClassName("step");
+            for (i = 0; i < x.length; i++) {
+                x[i].className = x[i].className.replace(" active", "");
+            }
+            //... and adds the "active" class on the current step:
+            x[n].className += " active";
+        }
+
+        /* Retirement Functions */
+        // Retirement Calculator
+        function retirementCalculator(){
+            var currentAge = parseInt(document.getElementById("currentAge").value);
+            var retirementAge = parseInt(document.getElementById("retirementAge").value);
+            var currentIncome = parseFloat(document.getElementById("annualIncome").value);
+            var currentSaving = parseFloat(document.getElementById("currentRetirementSavings").value);
+            var annualContribution = parseFloat(document.getElementById("annualRetirementContribution").value);
+            var incomeIncreaseRate = parseFloat(document.getElementById("incomeIncrease").value);
+            var annualSpending = parseFloat(document.getElementById("annualRetirementSpending").value);
+            var overallEffectiveTaxRate = parseFloat(document.getElementById("taxRate").value);
+            var rateOfReturn = parseFloat(document.getElementById("returnRate").value);
+            
+            var numberOfSimulations = 1000;
+            var yearsToRetirement = retirementAge - currentAge;
+           
+            var incomeIncrease = incomeIncreaseRate / 100;
+            var tax = overallEffectiveTaxRate / 100;
+
+            
+            // define Monte Carlo Simulation function
+            function runMonteCarloSimulation(){
+                var simulationResults = [];
+                for (let i = 0; i < numberOfSimulations; i++){
+                    var age = currentAge;
+                    var savings = currentSaving;
+                    var income = currentIncome;
+
+                    for (let j = 0; j < yearsToRetirement; j++){
+                        // calculate effective tax rate
+                        var taxRate = tax;
+                        if (income < annualSpending){
+                            taxRate = 0;
+                        }
+                        // calculate annual savings
+                        var annualSavings = (income - (income * taxRate)) * (1 - incomeIncrease);
+                        savings += annualSavings;
+                        savings += annualContribution;
+                        income *= (1 + incomeIncrease);
+                        age++;
+                    }
+                    simulationResults.push(savings);
+                }
+                return simulationResults;
+            }
+
+            // run Monte Carlo Simulation
+            var simulationResults = runMonteCarloSimulation();
+
+            // calculate median and 90th percentile of simulation results
+            var median = simulationResults.sort((a, b) => a - b)[Math.floor(numberOfSimulations / 2)];
+            var percentile90 = simulationResults.sort((a, b) => a - b)[Math.floor(numberOfSimulations * 0.9)];
+
+            // calculate savings needed
+            var savingsNeed = annualSpending * yearsToRetirement;
+
+            // calculate future savings
+            var futureSavings = percentile90;
+
+            var result = document.getElementById("result");
+
+            var resultHtml = "You will need $" + savingsNeed.toFixed(2) + " at retirement. ";
+
+            if (savingsNeed < futureSavings){
+                resultHtml += "Based on your current plan, you would have $" + futureSavings.toFixed(2) + " which is below your needed savings.";
+            } else if (savingsNeed == futureSavings){
+                resultHtml += "Based on your current plan, you would have $" + futureSavings.toFixed(2) + " which is the exact savings amount you will be needing.";
+            } else {
+                resultHtml += "Based on your current plan, you would have $" + futureSavings.toFixed(2) + " which is more than your needed savings.";
+            }
+
+            // display output
+            var clientName = document.getElementById("clientName").value;
+            var greeting = document.getElementById("greeting");
+
+            greeting.innerHTML = "Hello " + clientName;
+            result.innerHTML = resultHtml;
+
+            //display graph
+            retireGraph(yearsToRetirement, currentSaving, rateOfReturn, annualContribution, tax);
+        }
+        
+        function retireGraph(yearsToRetirement, currentSaving, rateOfReturn, annualContribution, tax){
+            const labels = [];
+            const data = [];
+            const volatility = 0.15;
+            for (let i = 0; i <= yearsToRetirement; i++){
+                labels.push(i);
+                let futureSavings = currentSaving;
+                for (let j = 0; j < i; j++){
+                    let yearReturn = normalRandom(rateOfReturn, volatility);
+                    futureSavings += annualContribution * (1 - tax) * (1 + yearsToRetirement);
+                }
+                data.push(futureSavings);
+            }
+            const ctx = document.getElementById("myChart").getContext("2d");
+            const myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: simulationResults,
+                    datasets: [{
+                        label: "Future Savings",
+                        data: data,
+                        borderColor: "#722F37",
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+
+        // Display Retirement Graph Function
+        function displayRetirementGraph(futureSavings, savingsNeed){
+            var graphDisplay = document.getElementById("myChart").getContext('2d')
+            var myChart = new Chart(graphDisplay, {
+                type: "bar",
+                data: {
+                    labels: ["Total Savings", "Saving Needed"],
+                    datasets: [{
+                        backgroundColor: ["#2E8B57", "#cb8e00"],
+                        data: [futureSavings.toFixed(2), savingsNeed.toFixed(2)]
+                    }]
+                },
+                options: {
+                    legend: {display: false},
+                    title: {
+                        display: true,
+                        text: "Retirement Plan"
+                    }
+                }
+            });
+        }
+
+         /* Investment Functions */
+        //Investment Calculator
+        function investmentCalculator(){
+            var startingAmount = parseFloat(document.getElementById("startingAmount").value);
+            var holdYears = parseInt(document.getElementById("holdTime").value);
+            var rateOfReturn = parseFloat(document.getElementById("returnRate").value);
+            var yearlyInvestment = parseFloat(document.getElementById("yearlyInvestment").value);
+            var taxRate = parseFloat(document.getElementById("taxRate").value);
+            const investmentData = [];
+
+            var investmentResult = document.getElementById("investmentResult");
+
+            var yearlyContribution = holdYears * yearlyInvestment;
+            var yearlyReturn = 0;
+
+            var investmentBalance = startingAmount;
+            for (var i = 1; i <= holdYears; i++){
+                var yearlyInterest = investmentBalance * (rateOfReturn/100);
+                var yearlyTax = yearlyInterest * (taxRate/100);
+                yearlyReturn += yearlyInterest - yearlyTax;
+                investmentBalance += yearlyReturn + yearlyInvestment;
+                investmentData.push(investmentBalance.toFixed(0));
+            }
+
+            document.getElementById("startAmt").innerHTML = "$" + startingAmount.toFixed(0);
+            document.getElementById("tCont").innerHTML = "$" +  yearlyContribution.toFixed(0);
+            document.getElementById("tGrowth").innerHTML = "$" +  yearlyReturn.toFixed(0);
+            document.getElementById("iYears").innerHTML = holdYears;
+            
+            investmentResult.innerHTML = "Investment Balance in " + holdYears + " will be $" + investmentBalance.toFixed(2) + ".";
+
+            displayInvestmentGraph(startingAmount, yearlyContribution, yearlyReturn);
+            invBarChart(holdYears, investmentData);
+        }
+        
+        // Display Investment Graph Function
+        function displayInvestmentGraph(startingAmount, yearlyContribution, yearlyReturn){
+            var graphDisplay = document.getElementById("investChart").getContext('2d')
+            var myChart = new Chart(graphDisplay, {
+                type: "pie",
+                data: {
+                    labels: ["Starting Amount", "Total Contribution", "Total Growth"],
+                    datasets: [{
+                        backgroundColor: ["#cb8e00", "#722F37", "#2E8B57"],
+                        data: [startingAmount.toFixed(2), yearlyContribution.toFixed(2), yearlyReturn.toFixed(2)]
+                    }]
+                },
+                options: {
+                    legend: {display: false},
+                    title: {
+                        display: true,
+                        text: "Investment Breakdown"
+                    }
+                }
+            });
+        }
+        
+        // Display bar graph
+        function invBarChart(holdYears, investmentData){
+            const investmentChart = new Chart(document.getElementById('myBarChart'), {
+                type: 'bar',
+                data: {
+                labels: Array.from({length: holdYears}, (_, i) => i + 1),
+                datasets: [{
+                    label: 'Investment Growth',
+                    data: investmentData,
+                    backgroundColor: '#722F37',
+                    borderColor: '#2E8B57',
+                    borderWidth: 1
+                }]
+                },
+                options: {
+                scales: {
+                    xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Years'
+                    }
+                    }],
+                    yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Balance'
+                    }
+                    }]
+                }
+                }
+            });
+         }
+            
+    
+    </script>
+</body>
+</html>
